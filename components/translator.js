@@ -5,43 +5,21 @@ const britishOnly = require('./british-only.js')
 
 class Translator {
   translate(locale,text) {
-    //load helper class
     const helper = new Helper;
-
-    // capitalize the first word
     let currText = helper.capitalizeFirstLetter(text);
-
-    // capitalize titles
     const americanToBritishTitlesCapitalized =  helper.capitalizeTitles(americanToBritishTitles, locale);
 
     if (locale == 'american-to-british') {
-
-      // merge objects
       const americanToBritish = {...americanToBritishTitlesCapitalized, ...americanOnly, ...americanToBritishSpelling}
-
-      //console.log(currText)
-      // for loop replace words
       currText = helper.replaceWordsKeyValue(currText, americanToBritish)
       currText = helper.replaceWordsValueKey(currText, britishOnly)
-
-      // replace time
       currText = helper.replaceTime(currText, ':', '.')
-
-      // return data
       return currText;
     } else {
-
-      // merge objects
       const americanToBritish = {...americanToBritishTitlesCapitalized, ...americanOnly, ...americanToBritishSpelling}
-
-      // for loop replace words
       currText = helper.replaceWordsValueKey(currText, americanToBritish)
       currText = helper.replaceWordsKeyValue(currText, britishOnly)
-
-      // replace time
       currText = helper.replaceTime(currText, ':', '.')
-
-      // return data
       return currText;
     }
   }
@@ -64,16 +42,16 @@ class Helper {
   replaceWordsKeyValue(text, libraryOfWords) {
     let currText = text
     for (const [key, value] of Object.entries(libraryOfWords)) {
-      let pattern = new RegExp(`\\b${key}\\b`, 'gi');
-      currText = currText.replace(pattern, ` <span class="highlight">${value}</span> `) //white space important
+      let pattern = new RegExp(`${key}`, 'gi');
+      currText = currText.replace(pattern, `<span class="highlight">${value}</span>`) //white space important
     }
     return currText;
   }
   replaceWordsValueKey(text, libraryOfWords) {
     let currText = text
     for (const [key, value] of Object.entries(libraryOfWords)) {
-      let pattern = new RegExp(`\\b${value}\\b`, 'gi');
-      currText = currText.replace(pattern, ` <span class="highlight">${key}</span> `) //white space important
+      let pattern = new RegExp(`${value}`, 'gi');
+      currText = currText.replace(pattern, `<span class="highlight">${key}</span>`) //white space important
     }
     return currText;
   }
