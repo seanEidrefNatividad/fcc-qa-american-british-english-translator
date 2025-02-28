@@ -12,11 +12,10 @@ class Translator {
     if (locale == 'american-to-british') {
       const americanToBritish = {...americanToBritishTitlesCapitalized, ...americanOnly, ...americanToBritishSpelling}
       currText = helper.replaceWordsKeyValue(currText, americanToBritish)
-      currText = helper.replaceWordsValueKey(currText, britishOnly)
       currText = helper.replaceTime(currText, ':', '.')
       return currText;
     } else {
-      const americanToBritish = {...americanToBritishTitlesCapitalized, ...americanOnly, ...americanToBritishSpelling}
+      const americanToBritish = {...americanToBritishTitlesCapitalized, ...americanToBritishSpelling}
       currText = helper.replaceWordsValueKey(currText, americanToBritish)
       currText = helper.replaceWordsKeyValue(currText, britishOnly)
       currText = helper.replaceTime(currText, ':', '.')
